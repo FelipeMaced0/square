@@ -11,19 +11,17 @@ enum Side {
   smolest,
 }
 
-//pass a length side and a mode, the function will return a value
-//for the longest one or for the smolest
+///This Function is for those who want display divine widgets.
+///Give the length of which one side and choose the mode longest or smolest.
+///Use the [Side] enum to informe the mode.
+///If you give the smallest one then the Function returns the length of the longest side according to the golden ratio
+///and vice versa.
+///phi = a/b = 1.61803398875
 int getGoldenSide(double b, Side side) {
   return side == Side.smolest ? (b * phi).floor() : (b / phi).floor();
 }
 
 class SquareSwitch extends StatefulWidget {
-  /// the [activeColor] will be the color when the switch is on
-  final Color activeColor;
-  final Color inactiveColor;
-  final Color activeTrackColor;
-  final Color inactiveTackColor;
-  final Function onChange;
 
   SquareSwitch({
     Key key,
@@ -33,6 +31,19 @@ class SquareSwitch extends StatefulWidget {
     this.inactiveTackColor = Colors.black,
     this.onChange,
   }) : super(key: key);
+
+  ///The [activeColor] will be the color when swich is ON.
+  final Color activeColor;
+  ///The [inactiveColor] will be the color when switch is OFF.
+  final Color inactiveColor;
+  ///The [activeTrackColor] will be the track color when switch is ON.
+  final Color activeTrackColor;
+  ///The [inactiveTrackColor] will be the track color when switch is OFF.
+  final Color inactiveTackColor;
+  ///The [onChange] is the Function provided by the programmer, used to know the actual state of switch ON/OFF.
+  final Function onChange;
+
+  
 
   @override
   _SquareSwitchState createState() => _SquareSwitchState();
@@ -108,7 +119,8 @@ class _SquareSwitchState extends State<SquareSwitch>
       },
     );
   }
-
+  ///This function play the animation forward or in reverse based on the state of the animation.
+  ///If completed, play in reverse otherwise play forward. 
   _animate() {
     setState(() {
       if (_controller.isCompleted) {

@@ -2,8 +2,9 @@ library square_switch;
 
 import 'package:flutter/material.dart';
 
-const double widthButton = 50;
-const double heightButton = widthButton / 2;
+const double _buttonWidth = 50;
+const double _buttonHeight = 31;
+const double _thumbWidth = 31;
 const double phi = 1.61803398875;
 
 enum Side {
@@ -17,8 +18,8 @@ enum Side {
 ///If you give the smallest one then the Function returns the length of the longest side according to the golden ratio
 ///and vice versa.
 ///phi = a/b = 1.61803398875
-int getGoldenSide(double b, Side side) {
-  return side == Side.smolest ? (b * phi).floor() : (b / phi).floor();
+double getGoldenSide(double b, Side side) {
+  return side == Side.smolest ? (b * phi).floorToDouble() : (b / phi).floorToDouble();
 }
 
 class SquareSwitch extends StatefulWidget {
@@ -85,15 +86,13 @@ class _SquareSwitchState extends State<SquareSwitch>
         return GestureDetector(
           onTap: () {
             _animate();
-            if (widget.onChange != null) {
-              widget.onChange();
-            }
+            widget.onChange ?? widget.onChange();
           },
           child: Container(
             margin: EdgeInsets.all(10.0),
             child: Container(
-              height: heightButton,
-              width: widthButton,
+              width: _buttonWidth,
+              height: _buttonHeight,
               decoration: BoxDecoration(
                   color: _controller.isCompleted
                       ? widget.activeTrackColor
@@ -102,7 +101,7 @@ class _SquareSwitchState extends State<SquareSwitch>
               child: Align(
                 alignment: _animation.value,
                 child: Container(
-                  width: heightButton,
+                  width: _thumbWidth,
                   margin: EdgeInsets.all(2.0),
                   decoration: BoxDecoration(
                     color: _controller.isCompleted

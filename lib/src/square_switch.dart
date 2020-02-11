@@ -1,5 +1,3 @@
-library square_switch;
-
 import 'package:flutter/material.dart';
 
 const double _buttonWidth = 50;
@@ -23,7 +21,7 @@ double getGoldenSide(double b, Side side) {
 }
 
 class SquareSwitch extends StatefulWidget {
-
+  ///The default colors of the switch are [white](opaque) and [black](opaque) in the active and inactive states
   SquareSwitch({
     Key key,
     this.activeColor = Colors.white,
@@ -41,7 +39,7 @@ class SquareSwitch extends StatefulWidget {
   final Color activeTrackColor;
   ///The [inactiveTrackColor] will be the track color when switch is OFF.
   final Color inactiveTackColor;
-  ///The [onChange] is the Function provided by the programmer, used to know the actual state of switch ON/OFF.
+  ///The [onChange] is the Function provided by the developer, used to know the actual state of switch ON/OFF.
   final Function onChange;
 
   

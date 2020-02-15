@@ -1,25 +1,5 @@
 import 'package:flutter/material.dart';
 
-const double _buttonWidth = 50;
-const double _buttonHeight = 31;
-const double _thumbWidth = 31;
-const double phi = 1.61803398875;
-
-enum Side {
-  longest,
-  smolest,
-}
-
-///This Function is for those who want display divine widgets.
-///Give the length of which one side and choose the mode longest or smolest.
-///Use the [Side] enum to informe the mode.
-///If you give the smallest one then the Function returns the length of the longest side according to the golden ratio
-///and vice versa.
-///phi = a/b = 1.61803398875
-double getGoldenSide(double b, Side side) {
-  return side == Side.smolest ? (b * phi).floorToDouble() : (b / phi).floorToDouble();
-}
-
 class SquareSwitch extends StatefulWidget {
   ///The default colors of the switch are [white](opaque) and [black](opaque) in the active and inactive states
   SquareSwitch({
@@ -27,22 +7,33 @@ class SquareSwitch extends StatefulWidget {
     this.activeColor = Colors.white,
     this.inactiveColor = Colors.white,
     this.activeTrackColor = Colors.black,
-    this.inactiveTackColor = Colors.black,
-    this.onChange,
+    this.inactiveTrackColor = Colors.black,
+    @required this.onChange,
+    this.buttonHeight = 25,
+    this.buttonWidth = 50,
+    this.thumbWidth = 25,
   }) : super(key: key);
 
   ///The [activeColor] will be the color when swich is ON.
   final Color activeColor;
+
   ///The [inactiveColor] will be the color when switch is OFF.
   final Color inactiveColor;
+
   ///The [activeTrackColor] will be the track color when switch is ON.
   final Color activeTrackColor;
+
   ///The [inactiveTrackColor] will be the track color when switch is OFF.
-  final Color inactiveTackColor;
+  final Color inactiveTrackColor;
+
   ///The [onChange] is the Function provided by the developer, used to know the actual state of switch ON/OFF.
   final Function onChange;
 
-  
+  final double buttonHeight;
+
+  final double buttonWidth;
+
+  final double thumbWidth;
 
   @override
   _SquareSwitchState createState() => _SquareSwitchState();
@@ -56,16 +47,15 @@ class _SquareSwitchState extends State<SquareSwitch>
   @override
   void initState() {
     super.initState();
-    _controller =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 300));
+    _controller = AnimationController(vsync: this);
     _animation = Tween<Alignment>(
       begin: Alignment.centerLeft,
       end: Alignment.centerRight,
     ).animate(
       CurvedAnimation(
         parent: _controller,
-        curve: Curves.elasticOut,
-        reverseCurve: Curves.elasticIn,
+        curve: Curves.elasticIn,
+        reverseCurve: Curves.elasticOut,
       ),
     );
   }
@@ -78,36 +68,37 @@ class _SquareSwitchState extends State<SquareSwitch>
 
   @override
   Widget build(BuildContext context) {
+    final _buttonHeight = widget.buttonHeight ?? 25;
+    final _buttonWidth = widget.buttonWidth ?? 50;
+    final _thumbWidth = widget.thumbWidth ?? 25;
+    _controller.duration = Duration(milliseconds: (15 * _thumbWidth.toInt()));
     return AnimatedBuilder(
       animation: _controller,
       builder: (context, widGet) {
         return GestureDetector(
           onTap: () {
             _animate();
-            widget.onChange ?? widget.onChange();
+            widget.onChange();
           },
           child: Container(
-            margin: EdgeInsets.all(10.0),
-            child: Container(
-              width: _buttonWidth,
-              height: _buttonHeight,
-              decoration: BoxDecoration(
+            width: _buttonWidth,
+            height: _buttonHeight,
+            decoration: BoxDecoration(
+                color: _controller.isCompleted
+                    ? widget.activeTrackColor
+                    : widget.inactiveTrackColor,
+                borderRadius: BorderRadius.all(Radius.circular(8.0))),
+            child: Align(
+              alignment: _animation.value,
+              child: Container(
+                width: _thumbWidth,
+                margin: EdgeInsets.all(2.0),
+                decoration: BoxDecoration(
                   color: _controller.isCompleted
-                      ? widget.activeTrackColor
-                      : widget.inactiveTackColor,
-                  borderRadius: BorderRadius.all(Radius.circular(8.0))),
-              child: Align(
-                alignment: _animation.value,
-                child: Container(
-                  width: _thumbWidth,
-                  margin: EdgeInsets.all(2.0),
-                  decoration: BoxDecoration(
-                    color: _controller.isCompleted
-                        ? widget.activeColor
-                        : widget.inactiveColor,
-                    shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                  ),
+                      ? widget.activeColor
+                      : widget.inactiveColor,
+                  shape: BoxShape.rectangle,
+                  borderRadius: BorderRadius.all(Radius.circular(8.0)),
                 ),
               ),
             ),
@@ -116,15 +107,14 @@ class _SquareSwitchState extends State<SquareSwitch>
       },
     );
   }
+
   ///This function play the animation forward or in reverse based on the state of the animation.
-  ///If completed, play in reverse otherwise play forward. 
+  ///If completed, play in reverse otherwise play forward.
   _animate() {
-    setState(() {
-      if (_controller.isCompleted) {
-        _controller.reverse();
-      } else {
-        _controller.forward();
-      }
-    });
+    if (_controller.isCompleted) {
+      _controller.reverse();
+    } else {
+      _controller.forward();
+    }
   }
 }

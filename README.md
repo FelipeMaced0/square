@@ -30,5 +30,4 @@ SquareSwitch(
     onChange: () {},
 ),
 ```
-Inline-style:
-    ![alt text](screenshot/Screenshot_buttons.png)
+![alt text](screenshot/Screenshot_buttons.png)

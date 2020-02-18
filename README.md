@@ -4,11 +4,11 @@ This  package contains a single widget. A square switch, in future i pretend to 
 
 # Getting started
 
-To use you need add as dependency to your project.
+To use it you need add as dependency to your project.
 
 ``` dart
 dependencies:
-    square: ^1.0.0
+    square: ^0.0.2
 ```
 
 # Importing
@@ -17,7 +17,7 @@ dependencies:
 import 'package:square/square.dart';
 ```
 
-# Using
+# Usage
 Make sure importing the library before try to use it
 ```dart
 import 'package:square/square.dart';

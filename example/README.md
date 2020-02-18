@@ -1,6 +1,6 @@
 # example
 
-A new Flutter project.
+A example that show the widget being used.
 
 ## Getting Started
 

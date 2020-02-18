@@ -29,10 +29,13 @@ class SquareSwitch extends StatefulWidget {
   ///The [onChange] is the Function provided by the developer, used to know the actual state of switch ON/OFF.
   final Function onChange;
 
+  ///Button Height
   final double buttonHeight;
-
+  
+  ///Button Width
   final double buttonWidth;
-
+  
+  ///Thumb Width. The Thumb Height will be the same as the track height.
   final double thumbWidth;
 
   @override
@@ -78,7 +81,7 @@ class _SquareSwitchState extends State<SquareSwitch>
         return GestureDetector(
           onTap: () {
             _animate();
-            widget.onChange();
+            if(widget.onChange!=null) widget.onChange();
           },
           child: Container(
             width: _buttonWidth,

@@ -1,3 +1,3 @@
-## [0.0.1].
+## [0.0.2].
 
-* This release have only one widget, a square switch. 
+* Fixing example of how to add this library to dependencies. 

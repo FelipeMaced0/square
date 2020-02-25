@@ -1,5 +1,5 @@
-name: example
-description: Example
+name: Example
+description: Example of usage of the library.
 version: 0.0.2
 
 environment:

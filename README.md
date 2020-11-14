@@ -1,6 +1,6 @@
 # Square
 
-This  package contains a single widget. A square switch, in future i pretend to add some other widgets made for me.
+This  package contains a single widget. A square switch, in the future i pretend to add some other widgets made by me.
 
 # Getting started
 
